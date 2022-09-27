@@ -1,0 +1,24 @@
+Part 1 - Introducing Asynchronus Programing
+https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing
+
+Learning Questions:
+
+What is the primary difference between synchronous and asynchronous programming in JavaScript?
+//  A:  synchronous functions have the browser go through each line/step in order because 
+//      it relies on the previous lines to process each following line of code 
+//      whereas asynchronous functions work on each line independently or wait for a "promise" 
+//      while still being able to run other parts of the code.
+
+Why is this useful?
+//  A:  You are able to do multiple things at once, or in different orders.
+
+What problems does it solve?
+//  A:  long-running functions that result in unresponsiveness until the function has finished.
+
+
+
+You are unable to do anything else while synchronous functions are processing
+Async APIs use promises instead of callbacks
+
+
+All Asynchronous functions run after the synchronous functions

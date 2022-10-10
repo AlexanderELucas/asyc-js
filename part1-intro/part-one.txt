@@ -1,4 +1,4 @@
-Part 1 - Introducing Asynchronus Programing
+Part 1 - Introducing Asynchronous Programing
 https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing
 
 Learning Questions:

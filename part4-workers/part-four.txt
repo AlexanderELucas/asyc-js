@@ -1,167 +1,81 @@
 -------------------------------------------------------------------------
 INTRODUCING WORKERS
 -------------------------------------------------------------------------
+Synchronous programs are "single threaded" which is what holds them up when 
+they have a long list of things to compute and do them in order.
 
+Workers let you run some tasks in a different thread but, with this 
+"multithreaded" code you never know when your thread will be suspended and 
+when the other thread will get a chance to run. This becomes an issue when 
+the threads are dealing with the same variables and a variable changes which 
+can start to create bugs since the multiple threads will change it at their 
+whim and not with the programmer's logic.
+
+You must use separate variables for your main code and your worker code to 
+avoid such bugs. Treat main and worker code as being on two different planes 
+of existence and can only send messages to each other. Workers must not be 
+able to access the DOM.
 -------------------------------------------------------------------------
 
-
-
-
-
-
-
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
+        The 3 different workers are:
+            "Dedicated workers" 
+                Used by a single script instance
+            "Shared workers" 
+                Can be shared by several scripts running in different windows
+            "Service workers" 
+                Act like proxy servers caching resources so that web applications can work 
+                when the user is offline. They are a key component of "Progressive Web Apps"
 
 -------------------------------------------------------------------------
-
+We'll use previous synchronous prime generator code and make it into a 
+dedicated worker starting with the following code.
 -------------------------------------------------------------------------
 
+            function generatePrimes(quota) {
 
+            function isPrime(n) {
+                for (let c = 2; c <= Math.sqrt(n); ++c) {
+                if (n % c === 0) {
+                    return false;
+                }
+                }
+                return true;
+            }
 
+            const primes = [];
+            const maximum = 1000000;
 
+            while (primes.length < quota) {
+                const candidate = Math.floor(Math.random() * (maximum + 1));
+                if (isPrime(candidate)) {
+                primes.push(candidate);
+                }
+            }
 
+            return primes;
+            }
 
+            document.querySelector('#generate').addEventListener('click', () => {
+            const quota = document.querySelector('#quota').value;
+            const primes = generatePrimes(quota);
+            document.querySelector('#output').textContent = `Finished generating ${quota} primes!`;
+            });
 
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
+            document.querySelector('#reload').addEventListener('click', () => {
+            document.querySelector('#user-input').value = 'Try typing in here immediately after pressing "Generate primes"';
+            document.location.reload();
+            });
 
 -------------------------------------------------------------------------
+Because it is synchronous, when we call generatePrimes() the program becomes 
+unresponsive.
 
+We will begin by creating HTML and CSS pages, then create a main.js and a 
+generate.js to separate the worker code from the main code.
+
+The worker is created in the main and called from the worker code ./generate.js
+
+As soon as main script create a worker it starts running it's code. For our 
+code, when the generate worker is created it starts listening right away for 
+a message from main.js
 -------------------------------------------------------------------------
-
-
-
-
-
-
-
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
-
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-
-
-
-
-
-
-
-

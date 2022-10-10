@@ -4,8 +4,6 @@ SEQUENCING ANIMATIONS
 This is an assessment in which I will be updating a page to play a series 
 of animations in a sequence. To do this I will use some of the techniques 
 learned in the "How to use Promises" article.
-
-https://github.com/AlexanderELucas/asyc-js
 -------------------------------------------------------------------------
 
         only main.js will be edited and original files will be copied from:

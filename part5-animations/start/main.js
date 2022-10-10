@@ -15,7 +15,7 @@ const alice3 = document.querySelector("#alice3");
 
 
 
-alicePromise = alice1.animate(aliceTumbling, aliceTiming).finished
+aliceAnimate = alice1.animate(aliceTumbling, aliceTiming).finished
   .then(() => alice2.animate(aliceTumbling, aliceTiming).finished)
   .then(() => alice3.animate(aliceTumbling, aliceTiming).finished);
 
